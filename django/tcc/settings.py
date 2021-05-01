@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +27,10 @@ import environ
 env = environ.Env(
     DEBUG=(bool, False), # an example
 )
+
+env_file = Path(__file__).resolve().parent / 'local.env'
+if os.path.exists(env_file):
+    environ.Env.read_env(str(env_file))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
